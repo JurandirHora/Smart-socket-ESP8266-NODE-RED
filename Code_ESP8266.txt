@@ -1,0 +1,200 @@
+define CLIENT_ID "client1"
+#define CLIENT_ID2 "client2"
+#define CLIENT_ID3 "client3"
+#include <DHT.h>
+#define DHTPIN 5         // What digital pin we're connected to
+#define D2    2
+
+// create MQTT object
+MQTT myMqtt(CLIENT_ID, "192.168.0.6", 1883);
+
+
+//
+const char* ssid     = "Younetworkhere";
+const char* password = "password";
+float pot    = A0;
+float value  = 0;
+float value3 = 0;
+float valor  = 0;
+float valorT = 0;
+//float h = dht.readHumidity();
+//float t = dht.readTemperature(); // or dht.readTemperature(true) for Fahrenheit
+
+
+
+// Uncomment whatever type you're using!
+#define DHTTYPE DHT11     // DHT 11
+//#define DHTTYPE DHT22   // DHT 22, AM2302, AM2321
+//#define DHTTYPE DHT21   // DHT 21, AM2301
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void sendSensor()
+  { 
+     
+    // float pot = A0;
+     //float value3 = 0;
+     float h = dht.readHumidity();
+     float t = dht.readTemperature(); // or dht.readTemperature(true) for Fahrenheit
+
+   if (isnan(h) || isnan(t)) {
+    Serial.println("Failed to read from DHT sensor!");
+    return;
+   }
+  }
+
+  
+  
+   
+ void setup() {
+  
+
+  Serial.begin(115200);
+  delay(1000);
+  dht.begin();
+  pinMode (D2,OUTPUT);
+
+  Serial.println();
+  Serial.println();
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
+  
+  WiFi.begin(ssid, password);
+  
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("");
+  Serial.println("WiFi connected");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
+
+  Serial.println("Connecting to MQTT server");  
+
+  // setup callbacks
+  myMqtt.onConnected(myConnectedCb);
+  myMqtt.onDisconnected(myDisconnectedCb);
+  myMqtt.onPublished(myPublishedCb);
+  myMqtt.onData(myDataCb);
+  myMqtt.onData(myDataCb2);
+  
+  
+  Serial.println("connect mqtt...");
+  myMqtt.connect();
+
+  delay(10);
+  
+  myMqtt.subscribe("client1/value");
+  myMqtt.subscribe("client2/value2");
+  myMqtt.subscribe("client3/value3");
+}
+
+
+ 
+
+void loop() {
+
+
+   valor = dht.readTemperature();
+  float  value  =  dht.readTemperature();
+  float  value2 =  dht.readHumidity();
+  float  value3  =  analogRead(A0);
+  
+  value3 = map(value3, 0, 927, 0, 60);
+  boolean result3 = 0;
+  String topic3( CLIENT_ID3 );
+  topic3 += "/value3";
+  String valueStr3(value3);
+
+   delay(1000);
+   result3 = myMqtt.publish(topic3, valueStr3);
+  
+   
+
+ boolean result = 0;
+ String topic( CLIENT_ID );
+ topic += "/value";
+ String valueStr(value);
+
+ delay(1000);
+ result = myMqtt.publish(topic, valueStr);
+ 
+
+ boolean result2 = 0;
+ String topic2( CLIENT_ID2 );
+ topic2 += "/value2";
+ String valueStr2(value2);
+
+ delay(1000);
+ result2 = myMqtt.publish(topic2, valueStr2);
+ 
+
+   
+   
+   if (valueStr < valueStr3 ) {
+    
+  digitalWrite(2, LOW);           
+ }
+  if(valueStr >(valueStr3) )      
+  {
+  digitalWrite(2, HIGH);  
+  }             
+  
+   
+
+
+ //Serial.print("Topico:");  Serial.print(topic);    Serial.print("Valor a ser enviado:");  Serial.print(valueStr);
+  //delay(20);
+}
+
+void myConnectedCb() {
+  Serial.println("connected to MQTT server");
+}
+
+
+void myDisconnectedCb() {
+  Serial.println("disconnected. try to reconnect...");
+  delay(500);
+  myMqtt.connect();
+}
+
+void myPublishedCb() {
+  //Serial.println("published.");
+}
+
+void myDataCb(String& topic, String& data) {
+ 
+   Serial.print(topic);
+ // Serial.print("(volta): ");
+   Serial.println(data);
+   
+ 
+
+}
+void myDataCb2(String& topic2, String& data2) {
+ 
+   Serial.print(topic2);
+ // Serial.print("(volta): ");
+    Serial.println(data2);
+
+}
+void myDataCb3(String& topic3, String& data3) {
+ 
+   Serial.print(topic3);
+ // Serial.print("(volta): ");
+    Serial.println(data3);
+
+}
+
+ 
+
+
+
+
+ 
+
+  
+
+  

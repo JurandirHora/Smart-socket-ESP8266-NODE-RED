@@ -1,3 +1,9 @@
+
+#include <ESP8266WiFi.h>
+#include <PubSubClient.h> // Librirys
+
+
+
 define CLIENT_ID "client1"
 #define CLIENT_ID2 "client2"
 #define CLIENT_ID3 "client3"

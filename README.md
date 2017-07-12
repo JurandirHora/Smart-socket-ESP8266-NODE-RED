@@ -7,6 +7,8 @@ of it , So if the temperature exceeds the value determined by you with the poten
 I used the GPIO D2, and I connected it to the base of a transistor, and the collector of this transistor will drive the coil of a
 Relay module, this relay can trigger a load that could be a fan, or a heater, depends on what you want to trigger.
 
+Link video youtube https://youtu.be/uKdEMALlciI 
+
 Let me know if you have any doubts about using this code, I'll respond as soon as possible.
 
 
@@ -22,3 +24,4 @@ e liguei na base de um transistor, e o coletor deste transistor acionara a bobin
 carga que poderia ser um ventilador, ou um aquecedor, depende do que quer acionar .
 
 Caso exista duvidas sobre o uso deste codigo, deixe-me saber, responderei o mais breve possivel. 
+Link video youtube https://youtu.be/uKdEMALlciI 

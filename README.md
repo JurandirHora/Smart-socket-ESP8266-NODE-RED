@@ -1,8 +1,8 @@
 
-Atualizei o arquivo do codigo, porque encontrei um erro, faltava a # anted do define na linha #define CLIENT_ID "client1" e causava um erro na hora de compilar.Agora compila sem erro
+Atualizei o arquivo do codigo, porque encontrei um erro, faltava uma # antes do define na linha #define CLIENT_ID "client1" e causava um erro na hora de compilar.Agora compila sem erro
 
 
-I updated the code file because I encountered an error, the # anted of the #define CLIENT_ID "client1" line was missing and it caused an error when compiling. Now work fine
+I updated the code file, because I encountered an error, it was missing the # before set in line #define CLIENT_ID "client1" and caused an error when compiling. Now work fine
 
 Using this code you can use an ESP8266, and a DHT11 temperature sensor, to publish and subscribe to a topic on an MQTT (Broker) server 
 by sending the temperature and humidity data of the place on the DHT11 to the broker, and subscribing the topic To receive this

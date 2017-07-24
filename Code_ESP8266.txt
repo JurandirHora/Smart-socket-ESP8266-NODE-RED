@@ -4,7 +4,7 @@
 
 
 
-define CLIENT_ID "client1"
+#define CLIENT_ID "client1"
 #define CLIENT_ID2 "client2"
 #define CLIENT_ID3 "client3"
 #include <DHT.h>
